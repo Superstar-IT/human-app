@@ -601,9 +601,6 @@ a:focus,
   padding-bottom: 20px;
   font-weight: 400;
 }
-#subscribe form {
-  padding-top: 20px;
-}
 #subscribe .text-danger {
   color: #cc0033;
   text-align: left;
@@ -613,6 +610,13 @@ a:focus,
 }
 #subscribe .btn-custom:hover {
   opacity: 0.8!important;
+}
+#subscribe .image-container {
+  padding: 0 5rem;
+}
+#subscribe .image-container img {
+  height: 100%;
+  background-color: #C4C4C4;
 }
 
 label {
@@ -710,6 +714,20 @@ label {
   line-height: 17px;
 }
 
+#intro .human-about {
+  background: url('../img/human_about_gb.png') no-repeat bottom;
+  background-size: 100% 70%;
+}
+#intro .human-about>div {
+  background: url('../img/human_about_dots.png') repeat-y left;
+}
+#intro .human-about .keen-slider__slide .content {
+  background: url('../img/content_dots.png') no-repeat top right;
+}
+#intro .human-jobs .keen-slider__slide .content {
+  background: url('../img/job_content_dots.png') no-repeat top left;
+}
+
 @media (max-width: 768px) {
   #about img {
     margin: 50px 0;
@@ -724,5 +742,8 @@ label {
   #job {
     max-height: 800px;
     padding: 88px 0;
+  }
+  #subscribe {
+    max-height: 656px;
   }
 }

@@ -1,14 +1,20 @@
-import { Welcome } from './welcome';
-import { Job } from './job';
-import { Subscribe } from './subscribe';
-const Home = ({ data }) => {
-    return(
-        <>
-        <Welcome data={data.Header} />
-        <Job data={data.Features} />
-        <Subscribe data={data.Contact} />
-        </>
-    )
-}
+import { useSelector, useDispatch } from "react-redux";
+import { Welcome } from "./welcome";
+import { Job } from "./job";
+import { Subscribe } from "./subscribe";
+import { IntroSection } from "./intro/intro";
 
-export default Home;
+const HomePage = ({ data }) => {
+  const isAuthed = useSelector((state) => state.auth.isAuthed);
+
+  return (
+    <>
+      <Welcome />
+      {isAuthed && <Job data={data.Features} />}
+      <IntroSection />
+      <Subscribe />
+    </>
+  );
+};
+
+export default HomePage;
