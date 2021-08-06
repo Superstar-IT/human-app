@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import Navigation from './components/navigation';
 import HomePage from './pages/Home/home';
 import LoginPage from './pages/Login/login';
@@ -7,6 +7,8 @@ import RegisterPage from './pages/Login/register';
 import ForgotPasswordPage from './pages/Login/forgotPassword';
 import ProfilePage from './pages/Profile/profile';
 import LinkWalletPage from './pages/Wallet/link';
+import VerifyEmail from './pages/Login/verifyEmail';
+
 import { Footer } from './components/footer';
 import { Routes } from './routes';
 
@@ -20,6 +22,7 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 });
 
 const App = () => {
+  const history = useHistory();
   const [landingPageData, setLandingPageData] = useState({});
   useEffect(() => {
     setLandingPageData(JsonData);
@@ -27,7 +30,7 @@ const App = () => {
 
   return (
     <div>
-      <Router>
+      <Router history={history}>
         <Navigation />
         <Switch>
           <Route exact path={Routes.Home.path} component={HomePage} />
@@ -36,6 +39,7 @@ const App = () => {
           <Route exact path={Routes.Profile.path} component={ProfilePage} />
           <Route exact path={Routes.LinkWallet.path} component={LinkWalletPage} />
           <Route exact path={Routes.ForgotPassword.path} component={ForgotPasswordPage} />
+          <Route exact path={Routes.VerifyEmail.path} component={VerifyEmail} />
           <Route exact path={Routes.Earning.path} component={LinkWalletPage} />
           <Redirect from='*' to='/' />
         </Switch>
