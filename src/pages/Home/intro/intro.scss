@@ -1,0 +1,73 @@
+#intro > div {
+  //   height: 44.45vw;
+}
+#intro .section {
+  height: 60%;
+}
+#intro .human-about .keen-slider__slide .image {
+  padding-left: 3rem;
+}
+#intro .human-jobs .keen-slider__slide .image {
+  padding-right: 3rem;
+}
+#intro .keen-slider__slide .image img {
+  height: 100%;
+  background-color: #c4c4c4;
+}
+#intro .human-about {
+  background-color: #1f0657;
+  padding: 5% 0;
+}
+#intro .human-about .container {
+  max-width: 960px;
+}
+// #intro .content {
+//   padding-top: 4rem;
+// }
+#intro .human-about h1,
+#intro .human-about h3,
+#intro .human-about p {
+  color: white;
+}
+#intro h3 {
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 280%;
+  align-items: center;
+  letter-spacing: -0.4px;
+}
+#intro p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.125rem;
+  line-height: 178%;
+  letter-spacing: 0.1px;
+}
+#intro .human-jobs {
+  padding: 8rem 0;
+}
+#intro .human-jobs .content {
+  padding-left: 5rem;
+}
+
+@media (max-width: 1800px) {
+  #intro .container {
+    height: 800px;
+  }
+}
+
+.keen-slider {
+  max-height: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+  #intro .human-about .section {
+    background-size: 20%;
+  }
+  #intro .human-about .keen-slider__slide .content {
+    background-size: 40%;
+  }
+  #intro .human-about .keen-slider__slide .image {
+    padding-left: unset !important;
+  }
+}
