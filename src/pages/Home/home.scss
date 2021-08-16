@@ -11,6 +11,10 @@
         }
         p {
             max-width: 504px;
+            a {
+                font-size: inherit;
+                color: #6309ff
+            }
         }
     }
 }
@@ -280,6 +284,9 @@
         .container {
             .form-group {
                 display: block!important;
+                &.social {
+                    display: flex!important;
+                }
                 .form-control {
                     margin-bottom: 10px;
                 }
@@ -289,6 +296,9 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .btn-primary {
+        height: auto!important;
+    }
     #welcome .earning-container {
         display: block;
     }
@@ -299,13 +309,30 @@
     #welcome .earning-container .form-group .form-control {
         width: 100%;
     }
-    #job div.section-option {
-        text-align: left!important;
-        ul {
-            display: flex;
-            justify-content: space-between;
+    #job {
+        div.section-option {
+            text-align: left!important;
+            margin-bottom:40px;
+            .title {
+                text-align: center;
+                margin: auto;
+            }
+            ul {
+                display: flex;
+                justify-content: center;
+                li {
+                    margin: 0 10px;
+                }
+            }
+        }
+        .section-details {
+            p {
+                max-width: 300px;
+                margin: auto;
+            }
         }
     }
+   
     #subscribe {
         .container {
             .form-group {
