@@ -23,7 +23,7 @@ const Slider = (props) => {
                 <div className="keen-slider__slide" key={index}>
                   <div className="row  max-height-100 h-100">
                     {props.type && props.type === "humanJobs" && (
-                      <div className=" col-md-6 col-sm-12 image d-none d-md-block">
+                      <div className=" col-md-6 col-sm-12 image">
                         <div className="image">
                           <img src={slide.image} alt="image"></img>
                         </div>
@@ -31,16 +31,12 @@ const Slider = (props) => {
                     )}
                     <div className="col-md-6 col-sm-12">
                       <div className="content d-flex flex-column justify-content-center h-100">
-                        <h1
-                          className="title"
-                          dangerouslySetInnerHTML={{ __html: slide.title }}
-                        ></h1>
                         <h3 className="subtitle">{slide.subTitle}</h3>
                         <p className="description">{slide.content}</p>
                       </div>
                     </div>
                     {props.type && props.type === "humanAbout" && (
-                      <div className=" col-md-6 col-sm-12 d-none d-md-block">
+                      <div className=" col-md-6 col-sm-12">
                         <div className="image">
                           <img src={slide.image} alt="image"></img>
                         </div>

@@ -28,15 +28,38 @@ export const SecondaryColor = {
 
 export const JobOptions = {
   captcha: "captcha",
-  referal: "referal",
+  referral: "referral",
   questionare: "questionare",
+  profile: 'profile',
 };
+
+export const Questions = {
+  task: 'What tasks would you prefer to do on the HUMAN App?',
+  refer: 'How did you get to know about the Human Protocol?',
+}
+
+export const ReferOptions = [
+  { value: "Twitter", label: "Twitter" },
+  { value: "Telegram groups", label: "Telegram groups" },
+  { value: "Reddit", label: "Reddit" },
+  { value: "Google Search", label: "Google Search" },
+  { value: "Crypto news website", label: "Crypto news website" },
+]
+
+export const TaskOptions = [
+  { label: "Solve captchas", value: "Solve captchas" },
+  { label: "Provide feedback on A/B tests.", value: "Provide feedback on A/B tests." },
+  { label: "Code review and Bug bounties.", value: "Code review and Bug bounties." },
+  { label: "Market research surveys.", value: "Market research surveys." },
+  { label: "Partake in predictions markets.", value: "Partake in predictions markets." },
+  { label: "Data labelling on video and/or text.", value: "Data labelling on video and/or text." },
+]
 
 export const HumanAbout = [
   {
     title: '',
     subTitle: "A new way to work",
-    content: "HUMAN Protocol tokenizes and automates the secure publishing of data labeling jobs, and manages the distribution of the work - and its rewards - across distributed workforces. The Protocol offers a new way for humans and machines to collaborate, and functions as a blockchain-based infrastructure for the creation and settlement of secure, globally accessible job markets.",
+    content: 'HUMAN Protocol tokenizes and automates the distribution of work - and its rewards - across global workforces. The Protocol offers a new way for humans and machines to collaborate, and functions as a blockchain-based infrastructure for the creation and settlement of secure, globally accessible job markets.',
     image: humanAboutImg_1,
   },
   {
@@ -48,7 +71,7 @@ export const HumanAbout = [
   {
     title: '',
     subTitle: "Improved human-machine collaboration",
-    content: "HUMAN Protocol tokenizes and automates the secure publishing of data labeling jobs, and manages the distribution of the work - and its rewards - across distributed workforces. The Protocol offers a new way for humans and machines to collaborate, and functions as a blockchain-based infrastructure for the creation and settlement of secure, globally accessible job markets.",
+    content: "Software takes care of everything in HUMAN Protocol, and that can include data labeling. Collaboration on HUMAN means leveraging machines to take care of the details and routine tasks, allowing humans to work on more interesting, subjective tasks to power a new generation of AI products.",
     image: humanAboutImg_3,
   },
   {
@@ -60,7 +83,7 @@ export const HumanAbout = [
   {
     title: '',
     subTitle: "Jobs and tasks",
-    content: "A single job can be made up of millions of tasks. In a HUMAN-Protocol-powered application, an individual task may represent any point of human-to-machine interaction: the labeling of data, or sign-off on machine labeling (known as feedback learning). HUMAN Protocol is designed to create a more human world: disintermediated yet connected, with many viewpoints and backgrounds accounted for and represented, in which value produced is rewarded.",
+    content: "A single job can be made up of millions of tasks. In a HUMAN-Protocol application, an individual task may represent any point of human-to-machine interaction: the labeling of data, or sign-off on machine labeling (known as feedback learning). HUMAN Protocol is designed to create a more human world: disintermediated yet connected, with many viewpoints and backgrounds accounted for and represented, in which value produced is rewarded.",
     image: humanAboutImg_5,
   },
 ];
@@ -69,7 +92,7 @@ export const HumanJobs = [
   {
     title: `The future of <span className='highlight'>HUMAN jobs</span>`,
     subTitle: "",
-    content: "hCaptcha is only the first application on which HUMAN jobs can be completed. The Protocol supports other applications - such as Intel CVAT and INCEpTION - and the potential for many more; HUMAN Protocol is simply the blockchain-based infrastructure which allows distributed parties to work together trustlessly.",
+    content: "Data labeling is only the first task type available on the HUMAN App. As more applications are supported by HUMAN Protocol – which currently includes support for Intel CVAT and INCEpTION – the range of task types will increase.",
     image: humanJobImg_1,
   },
   {
@@ -98,16 +121,14 @@ export const ErrorMessage = {
   invaidPassword: "Invalid Password",
   invalidWalletAddress: "Invalid Wallet Address",
   invalidEmail: "Invalid Email",
-  duplicatedUserName: "username is already used",
   duplicatedEmail: "email is already used",
   requirePassword: "Password required",
   requireEmail: "Email required",
-  requireUserName: "Username required",
-  requireFirstName: "First name required",
-  requireLastName: "Last name required",
+  requireUserName: "User name required",
   requireWalletAddress: "Wallet Address required",
   requireVerificationToken: 'Verification token required',
-  invalidVerificationToken: 'invalid verification token',
+  invalidVerificationToken: 'Invalid verification token',
+  captchPassRequired: 'You need to pass captcha',
 };
 
 export const SignUpOpt = {

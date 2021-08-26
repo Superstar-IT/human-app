@@ -3,6 +3,7 @@ import { Button, FormControl, FormGroup, Alert } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import * as EmailValidator from 'email-validator';
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { Password } from '../../components/inputs/password/password';
 import { signIn } from '../../service/user.service';
 import { Routes } from '../../routes';
@@ -18,6 +19,7 @@ const LoginPage = (props) => {
   }); 
   const [alertMsg, setAlertMsg] = useState('')
   const [submitted, setSubmitted] = useState(false);
+  const [captchaPassed, setCaptchaPassed] = useState(false);
   const { email, password } = inputs;
 
   const handleChange = (e) => {
@@ -25,21 +27,28 @@ const LoginPage = (props) => {
     setInputs(inputs => ({ ...inputs, [name]: value }));
   }
 
+  const handleVerificationSuccess = (token, ekey) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>', { token, ekey })
+    if(token) setCaptchaPassed(true);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    if (email && password && EmailValidator.validate(email)) {
+    if (email && password && EmailValidator.validate(email) && captchaPassed) {
       signIn({ email, password }).then((res) => {
         if (res) {
-          dispatch({
-            type: 'AUTH_SIGN_IN',
-            payload: true,
-          });
+          let { user } = res;
           dispatch({
             type: 'AUTH_SUCCESS',
             payload: res,
           })
-          history.push({ pathname: Routes.Home.path });
+          dispatch({
+            type: 'AUTH_SIGN_IN',
+            payload: user.isEmailVerified,
+          });
+          if(user.isEmailVerified) history.push({ pathname: Routes.Job.path });
+          else history.push({ pathname: Routes.VerifyEmail.path });
         }
       }).catch((err) => {
         setAlertMsg(err.message);
@@ -53,7 +62,6 @@ const LoginPage = (props) => {
       <div className='container'>
         <div className='page-title d-flex justify-content-between mb-4'>
           <h2>Log in</h2>
-          <Link to='/'><i className='material-icons close'>clear</i></Link>
         </div>
         { alertMsg && alertMsg.length &&
           <Alert variant="danger" onClose={() => setAlertMsg('')} dismissible>
@@ -72,10 +80,21 @@ const LoginPage = (props) => {
                 <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.invalidEmail}</FormControl.Feedback>
               }
             </FormGroup>
-            <Password onChange={handleChange} value={password} submitted={submitted}></Password>
+            <Password onChange={handleChange} value={password} submitted={submitted} name='password' confirm={true} placeholder="Password"></Password>
+            <FormGroup className='text-center'>
+              <HCaptcha
+                sitekey="64fd34e8-c20f-4312-ab15-9b28a2ff3343"
+                onVerify={(token, ekey) =>
+                  handleVerificationSuccess(token, ekey)
+                }
+              />
+              {submitted && !captchaPassed &&
+                <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.captchPassRequired}</FormControl.Feedback>
+              }
+            </FormGroup>
             <FormGroup className='actions d-flex justify-content-between m-0'>
               <Link className='btn' to={Routes.Home.path}>Back</Link>
-              <Button className='form-control bg-blue' onClick={handleSubmit}>Next</Button>
+              <Button className='form-control bg-blue' onClick={handleSubmit}>Log in</Button>
             </FormGroup>
           </form>
         </div>

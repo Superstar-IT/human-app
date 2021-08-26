@@ -1,18 +1,38 @@
 #profile {
     max-width: 400px;
     margin: auto;
-    margin-top: 4rem !important;
     .container {
         p {
             font-size: 16px;
             line-height: 200%;
-            letter-spacing: 0.2px
+            letter-spacing: 0.2px;
+            text-align: left!important;
         }
         a {
             color: #6309FF;
             font-size: 16px;
             line-height: 200%;
             letter-spacing: 0.2px;
+        }
+        .dropdown {
+            .dropdown-toggle {
+                color: #0a060e;
+                background-color: white!important;
+                display: flex;
+                justify-content: space-between;
+                .fa {
+                    font-size: 26px;
+                }
+            }
+            .dropdown-menu {
+                a {
+                    color: #0a060e;
+                }
+                &.show {
+                    height: 300px;
+                    overflow: auto;
+                }
+            }
         }
         .actions {
             .btn {

@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import * as EmailValidator from 'email-validator';
 import { FormControl, FormGroup, Button, Modal  } from 'react-bootstrap';
 import './home.scss';
 import { Routes } from '../../routes';
-import { sendVerificationEmail } from '../../service/user.service';
+import { sendNewsletterSignup } from '../../service/user.service';
 
 const Welcome = ({ history }) => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState({ email: true, msg: '' });
-  const [showModal, setShowModal] = useState(false);
   const { isAuthed, user, token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +22,9 @@ const Welcome = ({ history }) => {
     } else if (isAuthed && !user && !email) {
       setStatus({ email: false, msg: 'email is required' });
     } else {
-      return sendVerificationEmail({ email, newsletter: false })
-        // .then(() => history.push({ pathname: Routes.Register.path, state: { email } }))
-        .then(() => setShowModal(true))
-        .catch((err) => setStatus({ email: false, msg: err.message }));
+      const newUser = { ...user, email };
+      dispatch({ type: 'SET_USER', payload: newUser });
+      history.push({ pathname: Routes.Register.path });
     }
   };
 
@@ -34,25 +33,28 @@ const Welcome = ({ history }) => {
     if (value) setStatus({ email: true, msg: '' });
     setEmail(value);
   };
+
   return (
     <div id='welcome' className='intro'>
       <div className='text-center'>
         <div className='intro-text'>
           <h1 className='text-center mb-4'>
-            Welcome to <span className='color-blue'>HUMAN App</span>
+            Welcome to the <span className='color-blue'>HUMAN App</span>
           </h1>
           <h4 className='text-center mb-4 font-weight-bold'>
-            Gateway to the HUMAN experience
+            Complete jobs; earn HMT.
           </h4>
-          <p className='text-center mb-4'>
-            Verify your email - we will also need a crypto wallet for security, and to send you HMT - you will receive 1 HMT for free when you register. To earn more, complete tasks, or refer friends. If you don’t have a wallet, follow <Link to={Routes.Register.path}>this link.</Link>
-          </p>
+          {!isAuthed && 
+            <p className='text-center mb-4'>
+            Please verify your email. We will also need a KYC-verified crypto wallet for security, and to send you HMT. You will receive 1 HMT when you register <a href="https://humanprotocol.org/app/terms-and-conditions" rel="noreferrer" target="_blank">(Only once per person)<span>&#42;</span></a> To earn more, complete tasks, or refer friends.
+            </p>
+          }
 
           <div className='row justify-content-center earning-container'>
             {isAuthed && (
               <FormGroup>
-                <Button className='form-control' onClick={handleSubmit}>
-                  Link your wallet and start earning HMT
+                <Button className='form-control earn-hmt-btn' onClick={() => history.push({ pathname: Routes.Job.path })}>
+                  Earn HMT
                 </Button>
               </FormGroup>
             )}
@@ -61,7 +63,7 @@ const Welcome = ({ history }) => {
                 <FormGroup className='mr-2'>
                   <FormControl
                     type='email'
-                    placeholder='email'
+                    placeholder='Email'
                     name='email'
                     value={email}
                     onChange={handleChange}
@@ -74,7 +76,7 @@ const Welcome = ({ history }) => {
                   </FormControl.Feedback>
                 </FormGroup>
                 <FormGroup>
-                  <Button className='form-control' onClick={handleSubmit}>
+                  <Button className='form-control earn-hmt-btn' onClick={handleSubmit}>
                     Start earning HMT
                   </Button>
                 </FormGroup>
@@ -83,13 +85,6 @@ const Welcome = ({ history }) => {
           </div>
         </div>
       </div>
-      <Modal centered show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Thanks for signing up, we will be in touch soon with next steps</p>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 };

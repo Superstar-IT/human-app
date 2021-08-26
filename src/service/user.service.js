@@ -10,7 +10,6 @@ export const authHeader = () => {
   } else {
       return {};
   }
-
 }
 
 export const register = async (user) => {
@@ -20,64 +19,85 @@ export const register = async (user) => {
   if(!user.email) throw new Error(`email required`);
   if(user.email && !EmailValidator.validate(user.email))
     throw new Error(`Invalid email`);
-
-  return {
-    "user": {
-      "id": "5ebac534954b54139806c112",
-      "email": "fake@example.com",
-      "name": "fake name",
-      "role": "user",
-      "kyc": false,
-      "referralCode": "Xt13",
-      "walletAddr": "0x00000000000000011020000000000000022333",
-      "earnedTokens": 4,
-      "pendingTokens": 1
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWJhYzUzNDk1NGI1NDEzOTgwNmMxMTIiLCJpYXQiOjE1ODkyOTg0ODQsImV4cCI6MTU4OTMwMDI4NH0.m1U63blB0MLej_WfB7yC2FTMnCziif9X8yzwDEfJXAg"
+  const locationData = {registration: {}};
+  const currentTime = new Date().getTime();
+  try {
+    const ipData = await axios.get('https://geolocation-db.com/json/')
+    if (ipData.status === 200) {
+      locationData.registration = ipData.data;
+      locationData.registration.timestamp = currentTime;
+    }
   }
-  
-  // return axios.post(
-  //   `${process.env.REACT_APP_API_URL}/auth/register`,
-  //   user,
-  // ).then((response) => {
-  //   if(response) {
-  //     const { user, tokens } = response.data;
-  //     localStorage.setItem('token', tokens.access.token);
-  //     localStorage.setItem('refreshToken', tokens.refresh.token);
-  //     return { user, token: tokens.access.token };
-  //   }
-  // })
+  catch (e) {
+    locationData.registration.error = "Unable to get location data";
+    locationData.registration.timestamp = currentTime;
+  }
+  user.misc = locationData;
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/auth/register`,
+    user,
+  ).then((response) => {
+    if(response) {
+      const { user, tokens } = response.data;
+      localStorage.setItem('token', tokens.access.token);
+      return { user, token: tokens.access.token, refreshToken: tokens.refresh.token };
+    }
+  }).catch((err) => {
+    throw new Error(err.response.data.message);
+  })
 }
 
 export const signIn = async ({email, password}) => {
+  const currentTime = new Date().getTime();
+  const locationData = {logins: {}};
+
+  await axios.get('https://geolocation-db.com/json/')
+    .then((ipData) => {
+      if (ipData.status === 200) {
+        locationData.logins[currentTime] = ipData.data;
+      }
+    }).catch((err) => {
+      locationData.logins[currentTime] = { error:  'Unable to get location data'};
+    });
+
   return axios.post(
     `${process.env.REACT_APP_API_URL}/auth/login`,
-    { email, password },
+    { email, password, misc: locationData},
   ).then((response) => {
     const { user, tokens } = response.data;
     localStorage.setItem('token', tokens.access.token);
-    localStorage.setItem('refreshToken', tokens.refresh.token);
-    return { user, token: tokens.access.token };
+    return { user, token: tokens.access.token, refreshToken: tokens.refresh.token };
   }).catch((err) => {
     throw new Error(err.response.data.message);
   });
 }
 
-export const update = async (user) => {
-  localStorage.setItem('user', JSON.stringify(user));  
-  return user;
+export const update = async (id, token, user) => {
+  return axios.patch(
+    `${process.env.REACT_APP_API_URL}/users/${id}`,
+    user,
+    { headers: { 
+      Authorization: `Bearer ${token}`,
+    } }
+  ).then((response) => {
+    if(response) {
+      return response.data;
+    }
+  }).catch((err) => { throw new Error(err.response.data.message); });
 }
 
-export const logOut = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  if(refreshToken && refreshToken.length) {
-    return axios.post(
-      `${process.env.REACT_APP_API_URL}/auth/logout`,
-      { refreshToken },
-    );
-  } else {
-    throw new Error('refreshToken required.')
-  }
+export const logOut = async (token, refreshToken) => {
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/auth/logout`,
+    { refreshToken },
+    { headers: { Authorization: `Bearer ${token}` } }
+  ).then((response) => {
+    if(response && response.status === 204) {
+      localStorage.removeItem('token');
+      return true;
+    }
+    else return false;
+  }).catch((err) => { throw new Error(err.response.data.message) });
 }
 
 export const forgotPassword = async (email) => {
@@ -89,7 +109,7 @@ export const forgotPassword = async (email) => {
     `${process.env.REACT_APP_API_URL}/auth/forgot-password`,
     { email },
   ).catch((err) => {
-    // throw new Error(err.response.data.)
+    throw new Error(err.response.data.message)
   })
 } 
 
@@ -98,20 +118,21 @@ export const linkWallet = async (address) => {
   return true;
 }
 
-export const getMyAccount = async (token) => {
-  return {
-    id: '5ebac534954b54139806c112',
-    email: 'fake@example.com',
-    name: 'fake name',
-    role: 'user'
-  }
+export const getMyAccount = async (id, token) => {
+  return axios.get(
+    `${process.env.REACT_APP_API_URL}/users/${id}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  ).then((response) => {
+    if(response) return response.data;
+    else return null;
+  }).catch((err) => { throw new Error(err.response.data.message) });
 }
 
 export const verifyEmail = async (token) => {
   return axios.post(
     `${process.env.REACT_APP_API_URL}/auth/verify-email`,
     null,
-    { params: { token } }
+    { params: { token }}
   ).then((response) => {
     if(response && response.status === 204)
       return true;
@@ -119,7 +140,7 @@ export const verifyEmail = async (token) => {
   }).catch((err) => { throw new Error(err.response.data.message) });
 }
 
-export const sendVerificationEmail = async (data) => {
+export const sendNewsletterSignup = async (data) => {
   return axios.post(
     `${process.env.REACT_APP_API_URL}/auth/register-interest`,
     data,
@@ -130,4 +151,30 @@ export const sendVerificationEmail = async (data) => {
   }).catch((err) => {
     throw new Error(err.response.data.message);
   });
+}
+
+export const resendEmailVerification = async (token) => {
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/auth/send-verification-email`,
+    null,
+    { headers: { Authorization: `Bearer ${token}` } }
+  ).then((response) => {
+    if(response && response.status === 204)
+      return true;
+    else throw new Error(`Failed to send email verification`);
+  }).catch((err) => {
+    throw new Error(err.response.data.message);
+  });
+}
+
+export const updateMisc = async (id, token, questionnaire) => {
+  return axios.post(
+    `${process.env.REACT_APP_API_URL}/users/${id}/misc`,
+    { questionnaire },
+    { headers: { Authorization: `Bearer ${token}` } }
+  ).then((response) => {
+    if(response) {
+      return response.data;
+    } 
+  }).catch((err) => { throw new Error(err.response.data.message) });
 }

@@ -101,6 +101,9 @@ ol {
 form .form-group {
   margin-bottom: 2rem;
 }
+form .form-group p {
+  word-break: break-all;
+}
 .dropdown-toggle::after {
   display: none !important;
 }
@@ -154,62 +157,7 @@ form .form-group {
   text-transform: none;
   color: #0a060e;
 }
-/* Navigation */
-#menu {
-  padding: 1rem;
-  transition: all 0.8s;
-  height: 6rem;
-  opacity: 0.9;
-  background-color: #fff;
-  backdrop-filter: blur(1.5rem);
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-style: normal;
-  letter-spacing: 0.3px;
-  font-weight: 600;
-}
-#menu .container {
-  display: flex;
-  justify-content: space-between;
-}
-#menu.navbar-default {
-  background-color: #fff;
-}
-#menu a.navbar-brand {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 800;
-  color: #333;
-  display: flex;
-}
-#menu a.navbar-brand .app-logo {
-  height: 36px;
-}
-#menu.navbar-default .navbar-nav > li > a {
-  font-family: "Lato", sans-serif;
-  text-transform: uppercase;
-  color: #555;
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 0.5rem 0.125rem;
-  border-radius: 0;
-  margin: 0.5rem 1.25rem 0;
-}
 
-#menu #avatar {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-weight: 600;
-  font-size: 2rem;
-  line-height: 100%;
-  letter-spacing: 4.5px;
-  border-radius: 50%;
-  border: 0;
-}
-#menu .dropdown .btn-primary {
-  background-color: #6309ff;
-  font-family: "Alliance No.1";
-}
 .dropdown-menu {
   padding: 16px!important;
 }
@@ -316,15 +264,6 @@ a:focus,
   outline-offset: none;
 }
 /* welcome Section */
-#welcome {
-  background: url("../img/welcome_bg.png") no-repeat;
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  -o-background-size: 100% 100%;
-  background-size: 100% 100%;
-  margin-top: 72px;
-  height: 36.44vw;
-}
 .intro {
   display: table;
   width: 100%;
@@ -340,20 +279,6 @@ a:focus,
   text-align: center;
   margin: auto;
   letter-spacing: 0.1px;
-}
-#welcome .intro-text {
-  padding-top: 10rem;
-  text-align: center;
-}
-
-#welcome .intro-text h3 {
-  font-style: normal;
-  font-weight: 800;
-  font-size: 2rem;
-  line-height: 2.25rem;
-  align-items: center;
-  text-align: center;
-  letter-spacing: 0.2px;
 }
 /* job Section */
 #job {
@@ -401,10 +326,10 @@ a:focus,
 #job .section-content .input-group .input-group-append .btn:focus {
   box-shadow: none;
 }
-#job .section-content .referal-link {
+#job .section-content .referral-link {
   margin-top: 64px;
 }
-#job .section-content .form-control.referal-btn {
+#job .section-content .form-control.referral-btn {
   font-weight: 600;
   font-size: 18px;
   line-height: 32px;
@@ -604,6 +529,7 @@ a:focus,
 /* Team Section */
 #profile .container,
 #login .container,
+#verifyEmail .container,
 #register .container {
   background: linear-gradient(359.93deg, #FFFFFF 10.95%, #FCFBFF 121.59%);
   border: 1px solid #EEEEEE;
@@ -611,12 +537,6 @@ a:focus,
   border-radius: 10px;
   padding: 32px 16px 24px;
 }
-/* Contact Section */
-#subscribe {
-  padding: 5% 0;
-  background-size: 100%;
-}
-
 label {
   font-size: 12px;
   font-weight: 400;
@@ -634,42 +554,6 @@ label {
 .form-control:-ms-input-placeholder {
   color: #777;
 }
-
-/* Footer Section*/
-#footer {
-  background: #fff;
-  height: 72px;
-  opacity: 0.8;
-}
-#footer a {
-  color: #0a060e;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 32px;
-  letter-spacing: 0.2px;
-}
-#footer p.address {
-  font-size: 14px;
-  line-height: 17px;
-}
-
-#intro .human-about {
-  background: url("../img/human_about_gb.png"), url('../img/dots.png'), url('../img/bottom_dots.png');
-  background-size: 100% 70%, auto 20%, 20%;
-  background-position: bottom, top center, bottom center;
-  background-repeat: no-repeat, no-repeat, no-repeat;
-}
-#intro .human-jobs {
-  background: url("../img/blurs.png");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: bottom;
-}
-#intro .human-jobs .keen-slider__slide .content {
-  background: url("../img/job_content_dots.png") no-repeat top left;
-}
-
 .modal-content {
   border-radius: 10px!important;
   max-width: 400px;
@@ -678,9 +562,6 @@ label {
   border: 0!important;
 }
 @media screen and (max-width: 768px) {
-  #welcome .intro-text {
-    padding-top: 3rem !important;
-  }
   .arrow {
     display: none;
   }
@@ -714,57 +595,7 @@ label {
   #register .page-title {
     margin-bottom: 1rem !important;
   }
-  #welcome,
   #profile {
-    margin-top: 4rem !important;
     height: auto !important;
-  }
-  #subscribe {
-    height: auto !important;
-  }
-  #subscribe p,
-  #subscribe h1 {
-    text-align: center !important;
-  }
-  #subscribe .form-control {
-    width: 100%!important;
-    margin: auto;
-  }
-}
-
-@media (max-width: 960px) {
-  #subscribe .form-control {
-    width: 400px;
-    margin: auto;
-  }
-  #subscribe .form-control.btn-custom {
-    width: 12rem!important;
-  }
-}
-
-@media (max-width: 1240px) {
-  #subscribe .form-control {
-    width: 100%;
-  }
-  #subscribe .form-control.btn-custom {
-    // width: 12rem!important;
-    max-width: 176px;
-  }
-  #subscribe .image-container {
-    padding: 0;
-  }
-}
-
-@media (min-width: 1800px) {
-  #welcome {
-    max-height: 656px;
-    margin-top: 72px;
-  }
-  #job {
-    max-height: 800px;
-    padding: 88px 0;
-  }
-  #subscribe {
-    max-height: 656px;
   }
 }
