@@ -20,6 +20,7 @@ const LoginPage = (props) => {
   const [alertMsg, setAlertMsg] = useState('')
   const [submitted, setSubmitted] = useState(false);
   const [captchaPassed, setCaptchaPassed] = useState(false);
+  const [hcaptchaToken, setHcaptchaToken] = useState('');
   const { email, password } = inputs;
 
   const handleChange = (e) => {
@@ -28,15 +29,17 @@ const LoginPage = (props) => {
   }
 
   const handleVerificationSuccess = (token, ekey) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>', { token, ekey })
-    if(token) setCaptchaPassed(true);
+    if(token) { 
+      setCaptchaPassed(true);
+      setHcaptchaToken(token);
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
     if (email && password && EmailValidator.validate(email) && captchaPassed) {
-      signIn({ email, password }).then((res) => {
+      signIn({ email, password, hcaptchaToken }).then((res) => {
         if (res) {
           let { user } = res;
           dispatch({
@@ -47,6 +50,8 @@ const LoginPage = (props) => {
             type: 'AUTH_SIGN_IN',
             payload: user.isEmailVerified,
           });
+          setCaptchaPassed(false);
+          setHcaptchaToken('');
           if(user.isEmailVerified) history.push({ pathname: Routes.Job.path });
           else history.push({ pathname: Routes.VerifyEmail.path });
         }
@@ -83,7 +88,7 @@ const LoginPage = (props) => {
             <Password onChange={handleChange} value={password} submitted={submitted} name='password' confirm={true} placeholder="Password"></Password>
             <FormGroup className='text-center'>
               <HCaptcha
-                sitekey="64fd34e8-c20f-4312-ab15-9b28a2ff3343"
+                sitekey={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
                 onVerify={(token, ekey) =>
                   handleVerificationSuccess(token, ekey)
                 }
@@ -94,7 +99,7 @@ const LoginPage = (props) => {
             </FormGroup>
             <FormGroup className='actions d-flex justify-content-between m-0'>
               <Link className='btn' to={Routes.Home.path}>Back</Link>
-              <Button className='form-control bg-blue' onClick={handleSubmit}>Log in</Button>
+              <Button className='form-control bg-blue' onClick={handleSubmit} disabled={!captchaPassed}>Log in</Button>
             </FormGroup>
           </form>
         </div>
