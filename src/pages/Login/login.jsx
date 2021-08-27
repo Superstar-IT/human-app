@@ -97,9 +97,9 @@ const LoginPage = (props) => {
                   handleVerificationSuccess(token, ekey)
                 }
                 onLoad={handleLoading}
-                endpoint={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
-                // apihost={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
-                // reportapi={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
+                endpoint={process.env.REACT_APP_API_URL}
+                apihost={process.env.REACT_APP_API_URL}
+                reportapi={process.env.REACT_APP_API_URL}
               />
               {submitted && !captchaPassed &&
                 <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.captchPassRequired}</FormControl.Feedback>
