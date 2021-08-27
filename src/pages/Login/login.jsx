@@ -98,8 +98,8 @@ const LoginPage = (props) => {
                 }
                 onLoad={handleLoading}
                 endpoint={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
-                apihost={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
-                reportapi={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
+                // apihost={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
+                // reportapi={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
               />
               {submitted && !captchaPassed &&
                 <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.captchPassRequired}</FormControl.Feedback>
