@@ -58,9 +58,13 @@ const LoginPage = (props) => {
         }
       }).catch((err) => {
         setAlertMsg(err.message);
+        setCaptchaPassed(false);
+        setHcaptchaToken('');
         captchaRef.current.resetCaptcha();
       });
     } else {
+      setCaptchaPassed(false);
+      setHcaptchaToken('');
       captchaRef.current.resetCaptcha();
     }
   }
