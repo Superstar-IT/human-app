@@ -64,9 +64,11 @@ export const signIn = async ({email, password, hcaptchaToken}) => {
     `${process.env.REACT_APP_API_URL}/auth/login`,
     { email, password, misc: locationData, hcaptchaToken},
   ).then((response) => {
-    const { user, tokens } = response.data;
-    localStorage.setItem('token', tokens.access.token);
-    return { user, token: tokens.access.token, refreshToken: tokens.refresh.token };
+    if(response) {
+      const { user, tokens } = response.data;
+      localStorage.setItem('token', tokens.access.token);
+      return { user, token: tokens.access.token, refreshToken: tokens.refresh.token };
+    }
   }).catch((err) => {
     throw new Error(err.response.data.message);
   });
