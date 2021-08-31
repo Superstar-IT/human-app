@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button, FormControl, FormGroup, Alert } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
@@ -22,21 +22,18 @@ const LoginPage = (props) => {
   const [captchaPassed, setCaptchaPassed] = useState(false);
   const [hcaptchaToken, setHcaptchaToken] = useState('');
   const { email, password } = inputs;
+  const captchaRef = useRef(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs(inputs => ({ ...inputs, [name]: value }));
   }
 
-  const handleVerificationSuccess = (token, ekey) => {
+  const handleVerificationSuccess = (token) => {
     if(token) { 
       setCaptchaPassed(true);
       setHcaptchaToken(token);
     }
-  }
-
-  const handleLoading = (data) => {
-    console.log('>>>>>>>>>>>>> Loading ', { data })
   }
 
   const handleSubmit = (e) => {
@@ -61,10 +58,12 @@ const LoginPage = (props) => {
         }
       }).catch((err) => {
         setAlertMsg(err.message);
+        captchaRef.resetCaptcha();
       });
-    } 
+    } else {
+      captchaRef.resetCaptcha();
+    }
   }
-
 
   return (
     <div id='login' className='col-md-4 offset-md-4 d-flex flex-column justify-content-center h-100'>
@@ -94,9 +93,9 @@ const LoginPage = (props) => {
               <HCaptcha
                 sitekey={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
                 onVerify={(token, ekey) =>
-                  handleVerificationSuccess(token, ekey)
+                  handleVerificationSuccess(token)
                 }
-                onLoad={handleLoading}
+                ref={captchaRef}
               />
               {submitted && !captchaPassed &&
                 <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.captchPassRequired}</FormControl.Feedback>
