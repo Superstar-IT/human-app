@@ -59,14 +59,14 @@ const LoginPage = (props) => {
           setCaptchaPassed(false);
           setHcaptchaToken('');
           setAlertMsg('Failed to login');
-          captchaRef.resetCaptcha();
+          captchaRef.current.resetCaptcha();
         }
       }).catch((err) => {
         setAlertMsg(err.message);
-        captchaRef.resetCaptcha();
+        captchaRef.current.resetCaptcha();
       });
     } else {
-      captchaRef.resetCaptcha();
+      captchaRef.current.resetCaptcha();
     }
   }
 
@@ -103,7 +103,7 @@ const LoginPage = (props) => {
                 ref={captchaRef}
               />
               {submitted && !captchaPassed &&
-                <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.captchPassRequired}</FormControl.Feedback>
+                <FormControl.Feedback type='invalid' className='d-block'>{ErrorMessage.captchaPassRequired}</FormControl.Feedback>
               }
             </FormGroup>
             <FormGroup className='actions d-flex justify-content-between m-0'>
