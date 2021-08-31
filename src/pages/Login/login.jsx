@@ -60,6 +60,7 @@ const LoginPage = (props) => {
         setAlertMsg(err.message);
         setCaptchaPassed(false);
         setHcaptchaToken('');
+        setSubmitted(false);
         captchaRef.current.resetCaptcha();
       });
     } else {
