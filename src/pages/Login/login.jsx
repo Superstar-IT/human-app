@@ -55,11 +55,6 @@ const LoginPage = (props) => {
           setHcaptchaToken('');
           if(user.isEmailVerified) history.push({ pathname: Routes.Job.path });
           else history.push({ pathname: Routes.VerifyEmail.path });
-        } else {
-          setCaptchaPassed(false);
-          setHcaptchaToken('');
-          setAlertMsg('Failed to login');
-          captchaRef.current.resetCaptcha();
         }
       }).catch((err) => {
         setAlertMsg(err.message);

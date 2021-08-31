@@ -70,7 +70,7 @@ export const signIn = async ({email, password, hcaptchaToken}) => {
       return { user, token: tokens.access.token, refreshToken: tokens.refresh.token };
     }
   }).catch((err) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err.response);
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', err);
     throw new Error(err.response.data.message);
   });
 }
