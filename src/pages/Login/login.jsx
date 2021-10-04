@@ -39,7 +39,6 @@ const LoginPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    console.log('>>>>>>>>>>>>>>>> Handle Submit')
   }
 
   return (
