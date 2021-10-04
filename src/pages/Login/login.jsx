@@ -25,13 +25,11 @@ const LoginPage = (props) => {
   const captchaRef = useRef(null);
 
   const handleChange = (e) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test Git Rebase');
     const { name, value } = e.target;
     setInputs(inputs => ({ ...inputs, [name]: value }));
   }
 
   const handleVerificationSuccess = (token) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test Rebase');
     if(token) { 
       setCaptchaPassed(true);
       setHcaptchaToken(token);
@@ -39,7 +37,6 @@ const LoginPage = (props) => {
   }
 
   const handleSubmit = (e) => {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test Git Rebase')
     e.preventDefault();
     setSubmitted(true);
     if (email && password && EmailValidator.validate(email) && captchaPassed) {
