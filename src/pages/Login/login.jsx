@@ -39,6 +39,7 @@ const LoginPage = (props) => {
   }
 
   const handleSubmit = (e) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test Git Rebase')
     e.preventDefault();
     setSubmitted(true);
     if (email && password && EmailValidator.validate(email) && captchaPassed) {
