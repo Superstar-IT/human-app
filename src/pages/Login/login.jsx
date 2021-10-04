@@ -25,6 +25,7 @@ const LoginPage = (props) => {
   const captchaRef = useRef(null);
 
   const handleChange = (e) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test Git Rebase');
     const { name, value } = e.target;
     setInputs(inputs => ({ ...inputs, [name]: value }));
   }
