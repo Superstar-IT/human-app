@@ -39,35 +39,7 @@ const LoginPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    if (email && password && EmailValidator.validate(email) && captchaPassed) {
-      signIn({ email, password, hcaptchaToken }).then((res) => {
-        if (res) {
-          let { user } = res;
-          dispatch({
-            type: 'AUTH_SUCCESS',
-            payload: res,
-          })
-          dispatch({
-            type: 'AUTH_SIGN_IN',
-            payload: user.isEmailVerified,
-          });
-          setCaptchaPassed(false);
-          setHcaptchaToken('');
-          if(user.isEmailVerified) history.push({ pathname: Routes.Job.path });
-          else history.push({ pathname: Routes.VerifyEmail.path });
-        }
-      }).catch((err) => {
-        setAlertMsg(err.message);
-        setCaptchaPassed(false);
-        setHcaptchaToken('');
-        setSubmitted(false);
-        captchaRef.current.resetCaptcha();
-      });
-    } else {
-      setCaptchaPassed(false);
-      setHcaptchaToken('');
-      captchaRef.current.resetCaptcha();
-    }
+    console.log('>>>>>>>>>>>>>>>> Handle Submit')
   }
 
   return (
