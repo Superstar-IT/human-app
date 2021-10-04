@@ -30,6 +30,7 @@ const LoginPage = (props) => {
   }
 
   const handleVerificationSuccess = (token) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>')
     if(token) { 
       setCaptchaPassed(true);
       setHcaptchaToken(token);
@@ -39,7 +40,6 @@ const LoginPage = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    console.log('>>>>>>>>>>>>>>>> Handle Submit')
   }
 
   return (
