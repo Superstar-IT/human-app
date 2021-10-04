@@ -30,6 +30,7 @@ const LoginPage = (props) => {
   }
 
   const handleVerificationSuccess = (token) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Test Rebase');
     if(token) { 
       setCaptchaPassed(true);
       setHcaptchaToken(token);
