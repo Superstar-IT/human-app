@@ -63,6 +63,7 @@ const Job = (props) => {
   }, [])
 
   const submitQuestions = (e) => {
+    console.log('>>>>>>>>>>>>>>>>>>')
     e.preventDefault();
     if(!refers) 
       return setErrorText('Answer required');
