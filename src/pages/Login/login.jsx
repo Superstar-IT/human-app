@@ -31,6 +31,7 @@ const LoginPage = (props) => {
   }
 
   const handleVerificationSuccess = (token) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>')
     if(token) { 
       setCaptchaPassed(true);
       setHcaptchaToken(token);
